@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "angular9-organizer"
+    }
+  },
+  "defaultProject": "angular9-organizer",
+  "cli": {
+    "analytics": "8457bbaa-e8d3-4de6-af4d-6f1a947a7274"
+  }
 }
