@@ -13,12 +13,12 @@ export class DateService {
   >(moment())
 
   incrementSelector(): void {
-    const updated = this.momentDate.value.add(1, 'month')
+    const updated: moment.Moment = this.momentDate.value.add(1, 'month')
     this.momentDate.next(updated)
   }
 
   decrementSelector(): void {
-    const updated = this.momentDate.value.subtract(1, 'month')
+    const updated: moment.Moment = this.momentDate.value.subtract(1, 'month')
     this.momentDate.next(updated)
   }
 

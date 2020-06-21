@@ -1,1 +1,36 @@
-<p>organizer works!</p>
+<div>
+  <header>
+    <strong>{{ date | async | moment:'DD.MM.YYYY' }}</strong>
+  </header>
+
+  <main *ngIf="!isLoading; else loading">
+    <ul *ngIf = "tasks.length; else noTasks">
+      <li class="task" *ngFor = "let task of tasks; let i = index">
+        <span>
+          <strong>{{ i + 1 }}</strong>
+          {{ task.title }}
+        </span>
+        <button class="btn btn-primary" (click) = "remove(task)">Удалить</button>
+      </li>
+    </ul>
+    <ng-template #noTasks>
+      <p class="text-center">Нет запланированных событий</p>
+    </ng-template>
+  </main>
+
+  <ng-template #loading>
+    <p class="text-center">Загрузка...</p>
+  </ng-template>
+
+  <footer>
+    <form (ngSubmit) = "submitHandler()" [formGroup] = "form">
+      <input type="text" placeholder="Введите текст..." formControlName="title">
+
+      <button
+        type="submit"
+        class="btn btn-primary btn-block"
+        [disabled] = "form.invalid"
+      >Добавить</button>
+    </form>
+  </footer>
+</div>

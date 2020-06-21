@@ -10,7 +10,7 @@
     <td
       *ngFor = "let day of week"
       [class.disabled] = "day.disabled"
-      (click) = "select(day)"
+      (click) = "setDay(day)"
     >
       <span
         [class.selected] = "day.selected"

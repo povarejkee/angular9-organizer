@@ -9,30 +9,35 @@ import * as moment from 'moment'
   styleUrls: ['./calendar.component.scss'],
 })
 export class CalendarComponent implements OnInit {
-  public monthCanvas = <Array<IDay[]>>[] // todo узнать про интерфейс массивов
+  public monthCanvas: IDay[][] = []
   public weekDays: string[] = moment.weekdaysShort(true)
 
   constructor(private dateService: DateService) {}
 
   ngOnInit(): void {
-    this.dateService.momentDate.subscribe((state) => {
-      const start = state.clone().startOf('month').startOf('week')
-      const end = state.clone().endOf('month').endOf('week')
-      const whileIterator = start.clone().subtract(1, 'day')
-      const data = [] // todo узнать про интерфейс массивов
+    this.dateService.momentDate.subscribe((state: moment.Moment) => {
+      const start: moment.Moment = state
+        .clone()
+        .startOf('month')
+        .startOf('week')
+      const end: moment.Moment = state.clone().endOf('month').endOf('week')
+      const whileIterator: moment.Moment = start.clone().subtract(1, 'day')
+      const data: IDay[][] = []
 
       while (whileIterator.isBefore(end)) {
         data.push(
-          new Array(7).fill(null).map(() => {
-            const value = whileIterator.add(1, 'day').clone()
+          new Array(7).fill(null).map(
+            (): IDay => {
+              const value: moment.Moment = whileIterator.add(1, 'day').clone()
 
-            return {
-              value,
-              now: value.isSame(moment(), 'date'),
-              selected: value.isSame(state, 'date'),
-              disabled: !value.isSame(state, 'month'),
+              return {
+                value,
+                now: value.isSame(moment(), 'date'),
+                selected: value.isSame(state, 'date'),
+                disabled: !value.isSame(state, 'month'),
+              }
             }
-          })
+          )
         )
       }
 
@@ -40,7 +45,7 @@ export class CalendarComponent implements OnInit {
     })
   }
 
-  select(day: IDay) {
+  setDay(day: IDay) {
     if (day.disabled) {
       return
     } else {
